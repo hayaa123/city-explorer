@@ -5,6 +5,7 @@ import axios
  from 'axios';
 import Result from './component/Result';
 import Header from './component/Header';
+import AlertError from './component/AlertError';
 
 export class App extends Component {
 
@@ -13,12 +14,15 @@ export class App extends Component {
     this.state ={
       city_name:"",
       lon:"",
-      lan:"",
-      isSubmit : false
+      lat:"",
+      isSubmit : false,
+      error: "",
+      showAlert:false
     }
   }
   getName=(e)=>{
     this.setState({
+      showAlert:false,
       isSubmit : false,
       city_name: `${e.target.value}`
     })
@@ -26,19 +30,29 @@ export class App extends Component {
 
   submitHandeler = (e)=>{
     e.preventDefault();
-    let config={
+    
+     let config={
       method:"GET",
       baseURL:`https://api.locationiq.com/v1/autocomplete.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city_name}`
-    }
+     }
     axios(config).then(res=>{
       let responseData=res.data[0]
+      console.log(responseData.error)
       this.setState({
         city_name:responseData.display_name,
         lon:responseData.lon,
         lat:responseData.lat,
-        isSubmit:true
+        isSubmit:true,
       })
-    })
+     
+    }).catch(error=>{
+      this.setState({
+        showAlert:true,
+        error : `${error}`
+      })
+    }) 
+    
+    
   }
 
   render() {
@@ -48,12 +62,15 @@ export class App extends Component {
         <LocationForm getName={this.getName} submitHandeler={this.submitHandeler}/>
         {this.state.isSubmit &&
         <> 
+        <div style ={{position:"relative"} }>
+             <Result city_name={this.state.city_name} lon={this.state.lon} lat ={this.state.lat}/>
+            <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=1-5`} style ={{width:1500,display:'block',margin:"auto"} } alt="map"/> 
+        </div>
         
-        <Result city_name={this.state.city_name} lon={this.state.lon} lat ={this.state.lat}/>
-          
-        <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=1-5`} style ={{width:1215} } alt="map"/>
-          
         </>
+        }
+        {
+          this.state.showAlert && <AlertError error ={this.state.error}/>
         }
       </>
     )
