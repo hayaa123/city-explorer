@@ -10,8 +10,9 @@ export class Result extends Component {
             width: "18rem",
             marginLeft: 150,
             position: "absolute",
-            left: 700,
-            top: 300,
+            right: 50,
+            top: 50,
+            zIndex:1,
           }}
         >
           <Card.Header>{this.props.city_name}</Card.Header>
