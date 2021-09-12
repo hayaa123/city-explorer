@@ -5,6 +5,7 @@ import axios
  from 'axios';
 import Result from './component/Result';
 import Header from './component/Header';
+import { Col,Row } from 'react-bootstrap';
 
 export class App extends Component {
 
@@ -46,7 +47,15 @@ export class App extends Component {
       <>
         <Header/>  
         <LocationForm getName={this.getName} submitHandeler={this.submitHandeler}/>
-        {this.state.isSubmit && <Result city_name={this.state.city_name} lon={this.state.lon} lat ={this.state.lat}/>}
+        {this.state.isSubmit &&
+        <> 
+        
+        <Result city_name={this.state.city_name} lon={this.state.lon} lat ={this.state.lat}/>
+          
+        <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=1-5`} style ={{width:1215}}/>
+          
+        </>
+        }
       </>
     )
   }

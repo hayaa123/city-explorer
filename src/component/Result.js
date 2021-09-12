@@ -6,11 +6,11 @@ export class Result extends Component {
             <>
               
 
-    <Card border="primary" style={{ width: '18rem' ,marginLeft:150}}>
+    <Card border="primary" style={{ width: '18rem' ,marginLeft:150 ,position:'absolute' ,left:700, top:300}}>
              <Card.Header>{this.props.city_name}</Card.Header>
             <Card.Body>
       <Card.Text>
-      <p>latitude :{this.props.lat}</p>  
+              <p>latitude :{this.props.lat}</p>  
               <p>longtitude :{this.props.lon}</p>
       </Card.Text>
     </Card.Body>
