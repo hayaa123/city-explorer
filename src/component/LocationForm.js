@@ -18,10 +18,6 @@ export class LocationForm extends Component {
                         </Button>
                     </Col>
                 </Row>
-
-
-
-
             </form>
             </>
         )
