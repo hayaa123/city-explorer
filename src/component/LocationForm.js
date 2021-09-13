@@ -14,7 +14,7 @@ export class LocationForm extends Component {
                     </Col>
                     <Col>
                         <Button variant="primary" type="submit" style={{marginTop:30}}>
-                            Submit
+                            Search
                         </Button>
                     </Col>
                 </Row>
