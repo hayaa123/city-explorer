@@ -63,8 +63,8 @@ export class App extends Component {
         {this.state.isSubmit &&
         <> 
         <div style ={{position:"relative"} }>
-             <Result city_name={this.state.city_name} lon={this.state.lon} lat ={this.state.lat}/>
-            <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=1-5`} style ={{width:1500,display:'block',margin:"auto"} } alt="map"/> 
+        <Result city_name={this.state.city_name} lon={this.state.lon} lat ={this.state.lat}/>
+        <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=1-5`} style ={{width:1500,display:'block',margin:"auto"} } alt="map"/> 
         </div>
         
         </>
