@@ -6,6 +6,7 @@ import axios
 import Result from './component/Result';
 import Header from './component/Header';
 import AlertError from './component/AlertError';
+import WeatherCard from './component/WeatherCard';
 
 export class App extends Component {
 
@@ -17,7 +18,8 @@ export class App extends Component {
       lat:"",
       isSubmit : false,
       error: "",
-      showAlert:false
+      showAlert:false,
+      weatherData :[]
     }
   }
   getName=(e)=>{
@@ -37,9 +39,9 @@ export class App extends Component {
      }
     axios(config).then(res=>{
       let responseData=res.data[0]
-      console.log(responseData.error)
+      // console.log(responseData.error)
       this.setState({
-        city_name:responseData.display_name,
+        city_name:responseData.address.name,
         lon:responseData.lon,
         lat:responseData.lat,
         isSubmit:true,
@@ -51,10 +53,26 @@ export class App extends Component {
         error : `${error}`
       })
     }) 
-    
-    
+    .then(() => {
+      axios
+        .get(
+          `${process.env.REACT_APP_LOCAL_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}&q=${this.state.city_name}`
+        )
+        .then((res) => {
+          // console.log(res.data)
+          this.setState({
+            weatherData : res.data
+          })
+        })
+        .catch((err) => {
+          this.setState({
+            showAlert: true,
+            error: err,
+          })
+        })
+    });
+    console.log(this.state.weatherData)
   }
-
   render() {
     return (
       <>
@@ -63,7 +81,8 @@ export class App extends Component {
         {this.state.isSubmit &&
         <> 
         <div style ={{position:"relative"} }>
-        <Result city_name={this.state.city_name} lon={this.state.lon} lat ={this.state.lat}/>
+        <Result city_name={this.state.city_name} lon={this.state.lon} lat ={this.state.lat} />
+        <WeatherCard weatherData={this.state.weatherData}/>
         <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=1-5`} style ={{width:1500,display:'block',margin:"auto"} } alt="map"/> 
         </div>
         
