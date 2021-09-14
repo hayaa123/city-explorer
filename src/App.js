@@ -19,7 +19,7 @@ export class App extends Component {
       isSubmit : false,
       error: "",
       showAlert:false,
-      weatherData :[]
+      weatherData :[],
     }
   }
   getName=(e)=>{
@@ -52,11 +52,12 @@ export class App extends Component {
         showAlert:true,
         error : `${error}`
       })
+      
     }) 
     .then(() => {
       axios
         .get(
-          `${process.env.REACT_APP_LOCAL_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}&q=${this.state.city_name}`
+          `${process.env.REACT_APP_LOCAL_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}`
         )
         .then((res) => {
           // console.log(res.data)
@@ -67,7 +68,7 @@ export class App extends Component {
         .catch((err) => {
           this.setState({
             showAlert: true,
-            error: err,
+            error : `${err}`,
           })
         })
     });
