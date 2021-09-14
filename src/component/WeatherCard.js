@@ -8,8 +8,10 @@ export class WeatherCard extends Component {
           border="primary"
           style={{
             width: "18rem",
+            height:"16rem",
             marginLeft: 150,
             position: "absolute",
+            overflow:'scroll',
             right: 50,
             top: 250,
             zIndex: 1,

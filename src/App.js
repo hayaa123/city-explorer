@@ -7,6 +7,8 @@ import Result from './component/Result';
 import Header from './component/Header';
 import AlertError from './component/AlertError';
 import WeatherCard from './component/WeatherCard';
+import MovieCard from './component/MovieCard';
+import { Row } from 'react-bootstrap';
 
 export class App extends Component {
 
@@ -16,6 +18,8 @@ export class App extends Component {
       city_name:"",
       lon:"",
       lat:"",
+      movie:[],
+      country_code :"",
       isSubmit : false,
       error: "",
       showAlert:false,
@@ -45,6 +49,7 @@ export class App extends Component {
         lon:responseData.lon,
         lat:responseData.lat,
         isSubmit:true,
+        country_code : responseData.address.country_code
       })
      
     }).catch(error=>{
@@ -71,6 +76,23 @@ export class App extends Component {
             error : `${err}`,
           })
         })
+    }).then(() => {
+      axios
+        .get(
+          `${process.env.REACT_APP_LOCAL_URL}/movie?country_code=${this.state.country_code}`
+        )
+        .then((res) => {
+          // console.log(res.data)
+          this.setState({
+            movie : res.data
+          })
+        })
+        .catch((err) => {
+          this.setState({
+            showAlert: true,
+            error : `${err}`,
+          })
+        })
     });
     console.log(this.state.weatherData)
   }
@@ -81,12 +103,14 @@ export class App extends Component {
         <LocationForm getName={this.getName} submitHandeler={this.submitHandeler}/>
         {this.state.isSubmit &&
         <> 
-        <div style ={{position:"relative"} }>
+        <div style ={{position:"relative", marginBottom:100}}>
         <Result city_name={this.state.city_name} lon={this.state.lon} lat ={this.state.lat} />
         <WeatherCard weatherData={this.state.weatherData}/>
         <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=1-5`} style ={{width:1500,display:'block',margin:"auto"} } alt="map"/> 
         </div>
-        
+        <div>
+          <Row><MovieCard movie={this.state.movie}/></Row>
+        </div>
         </>
         }
         {
