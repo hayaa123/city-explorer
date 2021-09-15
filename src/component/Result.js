@@ -18,8 +18,8 @@ export class Result extends Component {
           <Card.Header>{this.props.city_name}</Card.Header>
           <Card.Body>
             <Card.Text>
-              <p>latitude : {this.props.lat}</p>
-              <p>longtitude : {this.props.lon}</p>
+              <>latitude : {this.props.lat}</>
+              <>longtitude : {this.props.lon}</>
            
             </Card.Text>
           </Card.Body>

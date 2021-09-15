@@ -23,8 +23,8 @@ export class WeatherCard extends Component {
               {this.props.weatherData.map(day => {
                   return (
                       <>
-                      <p>date :{day.date}</p>
-                      <p>describtion :{day.description}</p>
+                      <>date :{day.date}</>
+                      <>describtion :{day.description}</>
                       </>
                   )
               })}

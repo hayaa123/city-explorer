@@ -17,7 +17,7 @@ export class MovieCard extends Component {
               <Card.Header>{item.name}</Card.Header>
               <Card.Body>
                 <Card.Text>
-                  <p>description : {item.description}</p>
+                  <>description : {item.description}</>
                 </Card.Text>
               </Card.Body>
             </Card>
